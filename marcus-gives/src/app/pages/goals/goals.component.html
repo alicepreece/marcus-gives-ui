@@ -1,22 +1,13 @@
-<div class="container">
+<div class="container pt-4">
   <div class="row">
     <div class="col">
-      <iframe src="{{noPovertyUrl}}"
-              loading="lazy"
-              style="width: 100%; height: 600px; border: 0px none;"></iframe>
+      <iframe [src]="currentUrl"
+              style="width: 50rem; height: 30rem"></iframe>
     </div>
-    <div class="col">
-      <ul>
-        <li>
-          {{goals[2].displayName}}<button>{{goals[2].displayName}}</button>
-        </li>
-        <li>
-          {{goals[1].displayName}}<button>{{goals[1].displayName}}</button>
-        </li>
-        <li>
-          {{goals[0].displayName}}<button>{{goals[0].displayName}}</button>
-        </li>
-      </ul>
+    <div class="col" style="align-items: end">
+      <div *ngFor="let goal of goals" class="row">
+      <button type="button" class="goalOptions btn btn-secondary btn-sm m-1" (click)="onSelectGoal(goal)">{{goal.displayName}}</button>
+      </div>
     </div>
   </div>
 </div>

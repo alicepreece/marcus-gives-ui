@@ -1,13 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {ProjectsComponent} from "./pages/projects/projects.component";
 import {ClientsComponent} from "./pages/clients/clients.component";
 import {GoalsComponent} from "./pages/goals/goals.component";
-import {NavigationComponent} from "./navigtion/navigation.component";
 import {CommonModule} from "@angular/common";
+import {ProjectService} from "./services/project.service";
+import { HttpClientModule} from "@angular/common/http";
+import {ClientService} from "./services/client.service";
+import {ComponentsModule} from "./components/components.module";
+import {NavigationComponent} from "./navigtion/navigation.component";
+import {AgGridModule} from "ag-grid-angular";
+import {ClientGridComponent} from "./pages/clients/client-grid/client-grid.component";
 
 @NgModule({
   declarations: [
@@ -15,14 +20,21 @@ import {CommonModule} from "@angular/common";
     ProjectsComponent,
     ClientsComponent,
     GoalsComponent,
-    NavigationComponent
+    NavigationComponent,
+    ClientGridComponent
   ],
   imports: [
     BrowserModule,
     CommonModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    ComponentsModule,
+    AgGridModule.withComponents([])
   ],
-  providers: [],
+  providers: [
+    ProjectService,
+    ClientService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
