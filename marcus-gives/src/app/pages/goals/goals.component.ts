@@ -21,7 +21,7 @@ export class GoalsComponent implements OnInit {
     console.log('[GoalsComponent] onInit');
     this.noPovertyUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://ourworldindata.org/grapher/share-of-population-in-extreme-poverty?country=BGD~BOL~MDG~IND~CHN~ETH~COD');
     this.equalEducationUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://ourworldindata.org/grapher/net-enrolment-rate-pre-primary');
-    this.environmentUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://ourworldindata.org/grapher/environment');
+    this.environmentUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://ourworldindata.org/grapher/forest-area-as-share-of-land-area');
     this.currentUrl = this.noPovertyUrl;
     this.goals = [
       {key: 'poverty', displayName: 'No Poverty'},

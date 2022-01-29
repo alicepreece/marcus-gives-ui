@@ -1,10 +1,10 @@
-<div class="container pt-4">
+<div class="container mt-5">
   <div class="row">
     <div class="col">
       <iframe [src]="currentUrl"
-              style="width: 50rem; height: 30rem"></iframe>
+              style="width: 45vw; height: 60vh"></iframe>
     </div>
-    <div class="col" style="align-items: end">
+    <div class="col">
       <div *ngFor="let goal of goals" class="row">
       <button type="button" class="goalOptions btn btn-secondary btn-sm m-1" (click)="onSelectGoal(goal)">{{goal.displayName}}</button>
       </div>

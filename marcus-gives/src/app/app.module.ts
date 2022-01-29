@@ -13,6 +13,7 @@ import {ComponentsModule} from "./components/components.module";
 import {NavigationComponent} from "./navigtion/navigation.component";
 import {AgGridModule} from "ag-grid-angular";
 import {ClientGridComponent} from "./pages/clients/client-grid/client-grid.component";
+import {ClientProfileComponent} from "./pages/clients/client-profile/client-profile.component";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {ClientGridComponent} from "./pages/clients/client-grid/client-grid.compo
     ClientsComponent,
     GoalsComponent,
     NavigationComponent,
-    ClientGridComponent
+    ClientGridComponent,
+    ClientProfileComponent
   ],
   imports: [
     BrowserModule,
