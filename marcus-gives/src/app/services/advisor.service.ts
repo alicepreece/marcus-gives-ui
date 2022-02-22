@@ -1,21 +1,21 @@
 import {Injectable} from "@angular/core";
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Client} from "../models/client.model";
 import {catchError, Observable} from "rxjs";
+import {Advisor} from "../models/advisor.model";
 
 @Injectable()
-export class ClientService {
+export class AdvisorService {
   baseUrl = environment.baseUrl;
 
   constructor(private http: HttpClient) {
   }
 
-  getClients(): Observable<Client[]>{
+  getAdvisors(): Observable<Advisor[]>{
     const headers= new HttpHeaders()
       .set('content-type', 'application/json')
       .set('Access-Control-Allow-Origin', '*')
-    return this.http.get<Client[]>(`${this.baseUrl}/clients`, {
+    return this.http.get<Advisor[]>(`${this.baseUrl}/advisors`, {
       headers: headers
     }).pipe(
       catchError((error) => {
@@ -24,11 +24,11 @@ export class ClientService {
       }));
   }
 
-  getClient(clientId: number): Observable<Client> {
+  getClient(advisorId: number): Observable<Advisor> {
     const headers= new HttpHeaders()
       .set('content-type', 'application/json')
       .set('Access-Control-Allow-Origin', '*')
-    return this.http.get<Client>(`${this.baseUrl}/client/${clientId}`, {
+    return this.http.get<Advisor>(`${this.baseUrl}/advisor/${advisorId}`, {
       headers: headers
     }).pipe(
       catchError((error) => {
@@ -37,11 +37,11 @@ export class ClientService {
       }));
   }
 
-  getClientFromUsername(clientUsername: string): Observable<Client> {
+  getAdvisorFromUsername(advisorUsername: string): Observable<Advisor> {
     const headers= new HttpHeaders()
       .set('content-type', 'application/json')
       .set('Access-Control-Allow-Origin', '*')
-    return this.http.get<Client>(`${this.baseUrl}/client/username/${clientUsername}`, {
+    return this.http.get<Advisor>(`${this.baseUrl}/advisor/username/${advisorUsername}`, {
       headers: headers
     }).pipe(
       catchError((error) => {

@@ -1,6 +1,7 @@
 import {Component, OnInit } from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {Goal} from "../../models/goal.model";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'goals-page-component',

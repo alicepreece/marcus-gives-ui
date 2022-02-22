@@ -1,6 +1,6 @@
 import {Client} from "./client.model";
 
-export interface Project {
+export class Project {
   id: number;
   name: string;
   total: number;

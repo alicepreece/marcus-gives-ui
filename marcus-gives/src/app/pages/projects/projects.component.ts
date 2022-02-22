@@ -11,11 +11,17 @@ import {Observable} from "rxjs";
 export class ProjectsComponent implements OnInit {
   projects: Observable<Project[]>;
   boolean = false;
+  currentProject: Project = new Project();
 
   constructor(private projectService: ProjectService) {
   }
 
   ngOnInit() {
+    console.log('[ProjectsComponent] onInit')
     this.projects = this.projectService.getProjects();
+  }
+
+  setProjectId(project: Project): void {
+    this.currentProject = project;
   }
 }

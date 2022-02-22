@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {Injectable, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -7,13 +7,31 @@ import {ClientsComponent} from "./pages/clients/clients.component";
 import {GoalsComponent} from "./pages/goals/goals.component";
 import {CommonModule} from "@angular/common";
 import {ProjectService} from "./services/project.service";
-import { HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {ClientService} from "./services/client.service";
 import {ComponentsModule} from "./components/components.module";
 import {NavigationComponent} from "./navigtion/navigation.component";
 import {AgGridModule} from "ag-grid-angular";
 import {ClientGridComponent} from "./pages/clients/client-grid/client-grid.component";
 import {ClientProfileComponent} from "./pages/clients/client-profile/client-profile.component";
+import {AppService} from "./app.service";
+import {BasicAuthInterceptor} from "./services/basic-auth.interceptor";
+import {ErrorInterceptor} from "./services/error.interceptor";
+import {AuthenticationService} from "./services/authentication.service";
+import {ReactiveFormsModule} from "@angular/forms";
+import {LoginComponent} from "./pages/login/login.component";
+import {AdvisorService} from "./services/advisor.service";
+
+@Injectable()
+export class XhrInterceptor implements HttpInterceptor {
+
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    const xhr = req.clone({
+      headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')
+    });
+    return next.handle(xhr);
+  }
+}
 
 @NgModule({
   declarations: [
@@ -23,7 +41,8 @@ import {ClientProfileComponent} from "./pages/clients/client-profile/client-prof
     GoalsComponent,
     NavigationComponent,
     ClientGridComponent,
-    ClientProfileComponent
+    ClientProfileComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -31,12 +50,19 @@ import {ClientProfileComponent} from "./pages/clients/client-profile/client-prof
     AppRoutingModule,
     HttpClientModule,
     ComponentsModule,
-    AgGridModule.withComponents([])
+    AgGridModule.withComponents([]),
+    ReactiveFormsModule
   ],
   providers: [
     ProjectService,
-    ClientService
+    ClientService,
+    AuthenticationService,
+    AdvisorService,
+    AppService,
+    { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

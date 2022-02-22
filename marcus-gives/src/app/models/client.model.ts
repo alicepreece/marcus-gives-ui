@@ -1,11 +1,13 @@
-export interface Client {
+import {User} from "./user.model";
+
+export class Client {
   id: number;
-  firstName: string;
-  surname: string;
+  user: User;
   accountNumber: string;
   emailAddress: string;
-  preferences: string;
-  projects: string[];
-  pastProjects: string[];
+  recommendation: string;
+  projects: number[];
+  pastProjects: number[];
   investableAmount: number;
+  advisorTeam: string;
 }

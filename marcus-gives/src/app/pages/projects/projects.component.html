@@ -1,7 +1,7 @@
 <div class="container" style="background-color: lightgrey">
   <div class="row">
     <div *ngFor="let project of projects | async" class="card"  style="outline: black">
-      <h5 class="card-title w-50">{{project.name}}</h5>
+      <h5 class="card-title w-50" ><button class="btn btn-secondary" style="background: none; color: black; font-weight: bold; border: none;" type="button" data-toggle="modal" data-target="#viewProjectModal" data-show="true" (click)="setProjectId(project)">{{project.name}}</button></h5>
       <div class="card-body">
         <p class="card-text">
           Region: {{project.region}} </p>
@@ -13,7 +13,7 @@
       </div>
     </div>
   </div>
-  <div class="row" style="margin-left: 60rem; margin-top: 10rem; padding-bottom: 0.5rem">
+  <div class="row" style="margin-left: 60rem; margin-top: 2rem; padding-bottom: 0.5rem">
     <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addProjectModal" data-show="true"> New Project</button>
   </div>
 </div>
@@ -22,5 +22,11 @@
 <div id="addProjectModal" class="modal fade"  role="dialog" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <add-project-modal-component></add-project-modal-component>
+  </div>
+</div>
+
+<div id="viewProjectModal" class="modal fade"  role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <view-project-modal-component [project]="currentProject"></view-project-modal-component>
   </div>
 </div>

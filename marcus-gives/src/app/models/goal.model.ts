@@ -1,4 +1,4 @@
-export interface Goal {
+export class Goal {
   key: string;
   displayName: string;
 }

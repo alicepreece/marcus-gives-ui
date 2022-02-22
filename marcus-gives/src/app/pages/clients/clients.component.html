@@ -1,3 +1,11 @@
 <div class="container">
-  <client-grid-component></client-grid-component>
+  <ng-container  *ngTemplateOutlet="isClientProfile ? profile : grid"></ng-container>
 </div>
+
+<ng-template #grid>
+  <client-grid-component></client-grid-component>
+</ng-template>
+
+<ng-template #profile>
+  <client-profile-component></client-profile-component>
+</ng-template>

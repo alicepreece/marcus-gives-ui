@@ -6,10 +6,35 @@
     </button>
   </div>
   <div class="modal-body">
-    add form here
+    <form [formGroup]="addProjectForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Project Name</label>
+        <input type="text" formControlName="username" class="form-control"/>
+        <div *ngIf="submitted && form['username'].errors" class="invalid-feedback">
+          <div *ngIf="form['username'].errors['required']">Username is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="total">Total</label>
+        <input type="text" formControlName="total" class="form-control"/>
+        </div>
+      <div class="form-group">
+        <label for="region">Region</label>
+        <input type="text" formControlName="region" class="form-control"/>
+      </div>
+      <div class="form-group">
+        <label for="aims">Aims</label>
+        <input type="text" formControlName="aims" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="strategy">Strategy</label>
+        <input type="text" formControlName="strategy" class="form-control" />
+      </div>
+      <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+    </form>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    <button type="button" class="btn btn-primary">Save changes</button>
+    <button type="button" class="btn btn-primary" [disabled]="loading">Save changes</button>
   </div>
 </div>
