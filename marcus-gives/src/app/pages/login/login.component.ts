@@ -11,7 +11,6 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   submitted = false;
-  returnUrl: string;
   error: string | undefined;
 
   constructor(
@@ -29,7 +28,6 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-    this.returnUrl = '/goals';
   }
 
   get form() { return this.loginForm.controls; }

@@ -5,7 +5,7 @@ import {Client} from "../models/client.model";
 import {catchError, Observable} from "rxjs";
 
 @Injectable()
-export class ClientService {
+export class ClientRequestService {
   baseUrl = environment.baseUrl;
 
   constructor(private http: HttpClient) {
@@ -48,5 +48,14 @@ export class ClientService {
         console.log('Find client failed with error', error);
         throw error;
       }));
+  }
+
+  createClient(client: Client): Observable<Client> {
+    const headers= new HttpHeaders()
+      .set('content-type', 'application/json')
+      .set('Access-Control-Allow-Origin', '*')
+    return this.http.post<Client>(`${this.baseUrl}/addClient`, client, {
+      headers: headers
+    })
   }
 }

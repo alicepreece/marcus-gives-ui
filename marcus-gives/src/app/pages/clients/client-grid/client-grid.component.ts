@@ -1,12 +1,13 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import { ColDef } from 'ag-grid-community';
+import {ColDef, RowClickedEvent} from 'ag-grid-community';
 import {Client} from "../../../models/client.model";
 import {map, Observable, Subscription} from "rxjs";
-import {ClientService} from "../../../services/client.service";
+import {ClientRequestService} from "../../../services/client-request.service";
 import {User} from "../../../models/user.model";
 import {Advisor} from "../../../models/advisor.model";
 import {AdvisorService} from "../../../services/advisor.service";
 import {AuthenticationService} from "../../../services/authentication.service";
+import {ViewClientModalService} from "../../../components/view-client-modal/view-client-modal.service";
 
 @Component({
   selector: 'client-grid-component',
@@ -27,8 +28,14 @@ export class ClientGridComponent implements OnInit, OnDestroy {
     { headerName: 'Active Projects', field: 'projects', valueFormatter: this.formatList}
   ];
 
-  constructor(private clientService: ClientService,
+  gridOptions = {
+    onRowClicked: (event: RowClickedEvent) =>
+      this.openClientProfile(event)
+  }
+
+  constructor(private clientRequestService: ClientRequestService,
               private advisorService: AdvisorService,
+              private viewClientModalService: ViewClientModalService,
               private authenticationService: AuthenticationService) {
   }
 
@@ -37,10 +44,11 @@ export class ClientGridComponent implements OnInit, OnDestroy {
     if (this.authenticationService.userValue) {
       console.log('clientgridcomponent', this.authenticationService.userValue);
       this.subscriptions.add(this.authenticationService.user.subscribe((user) => {
+        console.log('user returned', user);
         this.advisorUser = user!;
         this.advisorService.getAdvisorFromUsername(this.advisorUser.username).subscribe((advisor) => {
           this.advisor = advisor;
-          this.rowData$ = this.clientService.getClients().pipe(
+          this.rowData$ = this.clientRequestService.getClients().pipe(
             map((clients: Client[]) => {
                 return clients.filter((client) => client.advisorTeam === this.advisor.team);
               }
@@ -56,10 +64,20 @@ export class ClientGridComponent implements OnInit, OnDestroy {
   }
 
   formatList(params: any): string {
-    let returnString: string = '';
+    let arrayLength: number = 0;
     for (let value in params.value) {
-      returnString += `${value} `
+      arrayLength += 1;
     }
-    return returnString;
+    return arrayLength.toString();
+  }
+
+  closeOffcanvas(): void {
+    const panel = document.getElementById("closeButton")
+    panel!.click();
+  }
+
+  openClientProfile(event: RowClickedEvent): void {
+    this.viewClientModalService.client = event.data;
+    this.viewClientModalService.openModal();
   }
 }

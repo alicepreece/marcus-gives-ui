@@ -45,6 +45,6 @@ export class ProjectService {
     const headers= new HttpHeaders()
       .set('content-type', 'application/json')
       .set('Access-Control-Allow-Origin', '*')
-    return this.http.post<Project>(`${this.baseUrl}/addProject`, {headers: headers});
+    return this.http.post<Project>(`${this.baseUrl}/addProject`, project, { headers: headers});
   }
 }

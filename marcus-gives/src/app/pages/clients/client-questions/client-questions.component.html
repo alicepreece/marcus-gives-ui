@@ -1,0 +1,195 @@
+<div class="offcanvas-body pt-1">
+  <form [formGroup]="createClientForm" (ngSubmit)="onSubmit()">
+    <div class="form-group mb-1">
+      <div class="mb-1">
+        <label for="firstname" class="form-label">First Name</label>
+        <input type="text" class="form-control" formControlName="firstname" id="firstname">
+      </div>
+      <div class="mb-1">
+        <label for="lastname" class="form-label">Last Name</label>
+        <input type="text" class="form-control" formControlName="lastname" id="lastname">
+      </div>
+      <div class="mb-1">
+        <label for="email" class="form-label">Email Address</label>
+        <input type="text" class="form-control" formControlName="email" id="email">
+      </div>
+      <div class="mb-1">
+        <label for="accountnumber" class="form-label">Account Number</label>
+        <input type="text" class="form-control" formControlName="accountnumber" id="accountnumber">
+      </div>
+      <div class="mb-1">
+        <label for="advisorteam" class="form-label">Advisor Team</label>
+        <input type="text" class="form-control" formControlName="advisorteam" id="advisorteam">
+      </div>
+      <div class="mb-1">
+        <label for="donationamount" class="form-label">Amount to Donate</label>
+        <input type="text" class="form-control" formControlName="donationamount" id="donationamount">
+      </div>
+    </div>
+    <h6 class="pt-1">Giving Preferences</h6>
+    <div class="mb-2">
+      <label>{{questions.QU1}}</label>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" formControlName="qu1" value=True id="q1social">
+        <label class="form-check-label" for="q1social">
+          Social
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" formControlName="qu1" value=False id="q1environmental">
+        <label class="form-check-label" for="q1environmental">
+          Environmental
+        </label>
+      </div>
+    </div>
+    <div class="mb-2">
+      <label>{{questions.QU2}}</label>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" formControlName="qu2" value=True id="q2economy">
+        <label class="form-check-label" for="q1social">
+          Economy
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" formControlName="qu2" value=False id="q2healthcare">
+        <label class="form-check-label" for="q1environmental">
+          Health
+        </label>
+      </div>
+    </div>
+    <div class="mb-2">
+      <label>{{questions.QU3}}</label>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" formControlName="qu3" value=True id="q3poverty">
+        <label class="form-check-label" for="q3poverty">
+          Poverty
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" formControlName="qu3" value=False id="q3education">
+        <label class="form-check-label" for="q3education">
+          Education
+        </label>
+      </div>
+    </div>
+    <div class="mb-2">
+      <label>{{questions.QU4}}</label>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" formControlName="qu4" value=True id="q4targeted">
+        <label class="form-check-label" for="q4targeted">
+          Targeted Strategy
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" formControlName="qu4" value=False id="q4diverse">
+        <label class="form-check-label" for="q4diverse">
+          Diverse Strategy
+        </label>
+      </div>
+    </div>
+    <div class="mb-2">
+      <label>{{questions.QU5}}</label>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" formControlName="qu5" value="none" id="q5no">
+        <label class="form-check-label" for="q4targeted">
+          No
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" formControlName="qu5" value="under5" id="q5under5">
+        <label class="form-check-label" for="q4diverse">
+          < 5
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" formControlName="qu5" value="over5" id="q5over5">
+        <label class="form-check-label" for="q4diverse">
+          > 5
+        </label>
+      </div>
+    </div>
+    <div class="mb-2">
+      <label>{{questions.QU6}}</label>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" formControlName="qu6" value=True id="q6esg">
+        <label class="form-check-label" for="q4targeted">
+          Only ESG Investments
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" formControlName="qu6" value=False id="q6all">
+        <label class="form-check-label" for="q4diverse">
+          All Investments
+        </label>
+      </div>
+    </div>
+    <div class="mb-2">
+      <label>{{questions.QU7}}</label>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" formControlName="qu7" value=True id="q7short">
+        <label class="form-check-label" for="q4targeted">
+          Short Term (Disaster relief etc)
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" formControlName="qu7" value=False id="q7long">
+        <label class="form-check-label" for="q4diverse">
+          Long Term
+        </label>
+      </div>
+    </div>
+    <div class="mb-2">
+      <label>{{questions.QU8}}</label>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" formControlName="qu9a" value="S.America" id="q9SA">
+        <label class="form-check-label" for="q9SA">
+          South America
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" formControlName="qu9b" value="N.America" id="q9NA">
+        <label class="form-check-label" for="q9NA">
+          North America
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" formControlName="qu9c" value="Africa" id="q9A">
+        <label class="form-check-label" for="q9A">
+          Africa
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" formControlName="qu9d" value="Europe" id="q9E">
+        <label class="form-check-label" for="q9E">
+          Europe
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" formControlName="qu9e" value="Middle East" id="q9ME">
+        <label class="form-check-label" for="q9ME">
+          Middle East
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" formControlName="qu9f" value="Central & South Asia" id="q9As">
+        <label class="form-check-label" for="q9As">
+          Central & South Asia
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" formControlName="qu9g" value="East & South East Asia" id="q9EAs">
+        <label class="form-check-label" for="q9EAs">
+          East & South East Asia
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" formControlName="qu9h" value="Oceania" id="q9O">
+        <label class="form-check-label" for="q9O">
+          Oceania / Australasia
+        </label>
+      </div>
+    </div>
+    <button [disabled]="formIncomplete()" class="btn btn-primary btn-sm">Create Client</button>
+  </form>
+</div>
+

@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {Client} from "../../../models/client.model";
-import {map, Observable, Subscription} from "rxjs";
-import {ClientService} from "../../../services/client.service";
+import {map, Observable} from "rxjs";
+import {ClientRequestService} from "../../../services/client-request.service";
 import {Project} from "../../../models/project.model";
 import {ProjectService} from "../../../services/project.service";
 import {User} from "../../../models/user.model";
@@ -18,7 +18,7 @@ export class ClientProfileComponent implements OnInit {
   currentProjects: Project[] = [];
   pastProjects: Project[] = [];
 
-  constructor(private clientService: ClientService,
+  constructor(private clientRequestService: ClientRequestService,
               private projectService: ProjectService,
               private authenticationService: AuthenticationService) {
   }
@@ -27,7 +27,7 @@ export class ClientProfileComponent implements OnInit {
     console.log('[ClientProfileComponent] init');
     if (this.authenticationService.userValue) {
       this.clientUser = this.authenticationService.userValue!;
-      this.client = this.clientService.getClientFromUsername(this.clientUser.username).pipe(
+      this.client = this.clientRequestService.getClientFromUsername(this.clientUser.username).pipe(
         map((client: Client) => {
           client.projects.forEach((project: number) => {
             this.projectService.getProject(project).subscribe(

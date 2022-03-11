@@ -1,4 +1,5 @@
 import {User} from "./user.model";
+import {Scores} from "./scores.model";
 
 export class Client {
   id: number;
@@ -10,4 +11,5 @@ export class Client {
   pastProjects: number[];
   investableAmount: number;
   advisorTeam: string;
+  scores?: Scores;
 }

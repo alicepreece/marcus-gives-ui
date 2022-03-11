@@ -11,6 +11,7 @@ const routes: Routes = [
   {path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard]},
   {path: 'clients', component: ClientsComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
+  { path: '', pathMatch: 'full', redirectTo: 'login' }
 ];
 export const routing: ModuleWithProviders<any> = RouterModule.forRoot(routes);
 

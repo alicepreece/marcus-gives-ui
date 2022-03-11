@@ -1,0 +1,10 @@
+export enum RegionEnum {
+  SAMERICA,
+  NAMERICA,
+  AFRICA,
+  EUROPE,
+  MEAST,
+  CANDSASIA,
+  EANDSEASIA,
+  OCEANIA
+}

@@ -12,18 +12,23 @@ import {User} from "../models/user.model";
 export class AuthenticationService {
   private userSubject: BehaviorSubject<User | null>;
   public user: Observable<User | null>;
-  private loggedIn = new BehaviorSubject<boolean>(false);
+  private loggedIn: BehaviorSubject<boolean>;
 
   constructor(
     private router: Router,
     private http: HttpClient,
   ) {
-    this.userSubject = new BehaviorSubject<User | null>(JSON.parse(localStorage.getItem('user')!));
+    this.userSubject = new BehaviorSubject<User | null>(JSON.parse(localStorage.getItem('user')!)?.user || null);
     this.user = this.userSubject.asObservable();
+    if (localStorage.getItem('user')) {
+      this.loggedIn = new BehaviorSubject<boolean>(true);
+    } else {
+      this.loggedIn = new BehaviorSubject<boolean>(false);
+    }
   }
 
   public get userValue(): User | null {
-    return this.userSubject.value
+    return this.userSubject.value;
   }
 
   login(username: string, password: string): Observable<any> {

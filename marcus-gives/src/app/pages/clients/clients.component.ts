@@ -19,7 +19,7 @@ export class ClientsComponent implements OnInit {
   ngOnInit(): void {
     console.log('[ClientComponent] onInit');
     if (this.authenticationService.userValue) {
-      console.log('client component', this.authenticationService.userValue);
+      console.log('Client component', this.authenticationService.userValue);
       this.user = this.authenticationService.userValue!;
       if (this.user?.role === RoleEnum.CLIENT) {
         this.isClientProfile = true;

@@ -1,9 +1,19 @@
 <div>
   <ag-grid-angular
-    style="width: 70rem; height: 90vh;"
+    style="width: 75vw; height: 85vh"
     class="ag-theme-alpine mt-2"
     [rowData]="rowData$ | async"
     [columnDefs]="columnDefs"
+    [gridOptions]="gridOptions"
   >
   </ag-grid-angular>
+  <button type="button" class="btn btn-primary btn-sm mt-1" data-bs-toggle="offcanvas" data-bs-target="#newClientPanel">New Client</button>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="newClientPanel" aria-labelledby="newClientPanel" style="overflow-y: scroll">
+  <div class="offcanvas-header pb-1">
+    <h5 id="offcanvasRightLabel">Creat New Client</h5>
+    <button id="closeButton" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <client-questions-component (closeClient)="closeOffcanvas()" ></client-questions-component>
 </div>
