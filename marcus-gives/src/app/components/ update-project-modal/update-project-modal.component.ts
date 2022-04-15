@@ -1,23 +1,22 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
+import {Component, Input, OnDestroy, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import { map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {ProjectService} from "../../services/project.service";
 import {Router} from "@angular/router";
-import {AddProjectModalService} from "./add-project-modal.service";
+import {UpdateProjectModalService} from "./update-project-modal.service";
 import {Subscription} from "rxjs";
 import {RegionEnum, RegionEnumList} from "../../models/region.enum";
 import {GoalEnumList} from "src/app/models/goal.enum";
-import {StrategyEnumList} from "../../models/strategy.enum";
+import {Strategy, StrategyEnumList} from "../../models/strategy.enum";
 import {Scores} from "../../models/scores.model";
 import {FeesEnum} from "../../models/fees.enum";
-import StrategyUtils from "../strategy.utils";
 
 @Component({
   selector: 'add-project-modal-component',
-  templateUrl: './add-project-modal.component.html',
-  styleUrls: ['./add-project-modal.component.scss']
+  templateUrl: './update-project-modal.component.html',
+  styleUrls: ['./update-project-modal.component.scss']
 })
-export class AddProjectModalComponent implements OnInit, OnDestroy {
+export class UpdateProjectModalComponent implements OnInit, OnDestroy {
   nextId: number;
   addProjectForm: FormGroup;
   submitted = false;
@@ -33,10 +32,11 @@ export class AddProjectModalComponent implements OnInit, OnDestroy {
   constructor(private formBuilder: FormBuilder,
               private projectService: ProjectService,
               private router: Router,
-              private addProjectModalService: AddProjectModalService){}
+              private addProjectModalService: UpdateProjectModalService){}
 
   ngOnInit() {
     console.log('[LoginComponent] onInit')
+    this.nextId = this.addProjectModalService.nextId
     this.addProjectForm = this.formBuilder.group({
       name: ['', Validators.required],
       goal: ['', Validators.required],
@@ -62,6 +62,7 @@ export class AddProjectModalComponent implements OnInit, OnDestroy {
     if (this.addProjectForm.invalid) {
       return;
     }
+    this.findStrategy()
     let regions: RegionEnum[] = [];
     regions.push(this.form['region'].value)
     const scores: Scores = {
@@ -69,10 +70,10 @@ export class AddProjectModalComponent implements OnInit, OnDestroy {
       socialOverEnv: this.form['socialOverEnv'].value !== 'False',
       povertyOverEducation: this.form['povOverEd'].value !== 'False',
       economyOverHealthcare: this.form['econOverHealth'].value !== 'False',
-      targetedOverDiverse: StrategyUtils.findTargeted(this.form['strategy'].value),
-      esgOverAll: StrategyUtils.findESG(this.form['strategy'].value),
+      targetedOverDiverse: this.targeted,
+      esgOverAll: this.esg,
       shortOverLongTerm: this.form['shortOverLong'].value !== 'False',
-      managementFees: this.form['fees'].value > 0 ? (this.form['fees'].value > 5 ? FeesEnum.OVER5 : FeesEnum.UNDER5) : FeesEnum.NONE,
+      managementFees: this.form['fees'].value > 0 ? FeesEnum.NONE : (this.form['fees'].value > 5 ? FeesEnum.OVER5 : FeesEnum.UNDER5),
       region: regions,
     }
     const project = {
@@ -88,13 +89,60 @@ export class AddProjectModalComponent implements OnInit, OnDestroy {
     }
     this.subscriptions.add(this.projectService.addProject(project).pipe(
       map((response) => {
-        if (response) {
-          this.closeModal();
-        }
+        const element = document.getElementById("closeModal")
+        element!.click();
+        console.log(response)
+        this.router.navigate(['projects']);
+        return;
       })).subscribe());
   }
 
   closeModal(){
     this.addProjectModalService.closeModal();
+  }
+
+  findStrategy(): void {
+    switch(this.form['strategy'].value) {
+      case Strategy.GLOBALSTRATEGY:
+        this.targeted = false
+        this.esg = false
+        return;
+      case Strategy.GLOBALESG:
+        this.targeted = false
+        this.esg = true
+        return;
+      case Strategy.GNEQALL:
+        this.targeted = true
+        this.esg = false
+        return;
+      case Strategy.GNEQESG:
+        this.targeted = true
+        this.esg = true
+        return;
+      case Strategy.ESGNEM:
+        this.targeted = true
+        this.esg = true
+        return;
+      case Strategy.ESGNDE:
+        this.targeted = true
+        this.esg = true
+        return;
+      case Strategy.EQESGACT:
+        this.targeted = true
+        this.esg = true
+        return;
+      case Strategy.EQACT:
+        this.targeted = true
+        this.esg = false
+        return;
+      case Strategy.BONDALL:
+        this.targeted = true
+        this.esg = false
+        return;
+      default:
+        this.targeted = true
+        this.esg = false
+        return;
+    }
   }
 }

@@ -1,7 +1,10 @@
 import {Component, OnInit } from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
-import {Goal} from "../../models/goal.model";
-import {AuthenticationService} from "../../services/authentication.service";
+import {GoalEnum, GoalEnumList} from "../../models/goal.enum";
+import {ProjectService} from "../../services/project.service";
+import {Router} from "@angular/router";
+import {AddProjectModalService} from "../../components/add-project-modal/add-project-modal.service";
+import {map, Subscription} from "rxjs";
 
 @Component({
   selector: 'goals-page-component',
@@ -16,9 +19,16 @@ export class GoalsComponent implements OnInit {
   sanitationUrl: SafeResourceUrl;
   healthUrl: SafeResourceUrl;
   inequalityUrl: SafeResourceUrl;
-  goals: Goal[];
+  goals: { key: string, value: string }[];
+  nextProjectId: number;
+  selectedGoal: string = 'No Poverty';
+  subscriptions: Subscription = new Subscription();
 
-  constructor(private sanitizer: DomSanitizer) {
+  constructor(
+    private sanitizer: DomSanitizer,
+    private projectService: ProjectService,
+    private router: Router,
+    private addProjectModalService: AddProjectModalService) {
   }
 
   ngOnInit(): void {
@@ -30,31 +40,40 @@ export class GoalsComponent implements OnInit {
     this.healthUrl = this.sanitizer.bypassSecurityTrustResourceUrl("https://ourworldindata.org/grapher/life-expectancy");
     this.inequalityUrl = this.sanitizer.bypassSecurityTrustResourceUrl("https://ourworldindata.org/grapher/economic-inequality-gini-index");
     this.currentUrl = this.noPovertyUrl;
-    this.goals = [
-      {key: 'poverty', displayName: 'No Poverty'},
-      {key: 'education', displayName: 'Quality Education'},
-      {key: 'environment', displayName: 'Protect the Environment'},
-      {key: 'sanitation', displayName: 'Improve Sanitation'},
-      {key: 'health', displayName: 'Health and Wellbeing'},
-      {key: 'inequality', displayName: 'Equal Societies'}];
+    this.goals = GoalEnumList;
+    this.subscriptions.add(this.projectService.getProjects().pipe(
+      map(projects => {
+        let highestId = 0;
+        projects.forEach(project => {
+          if (project.id > highestId) {
+            highestId = project.id
+          }
+        })
+        this.nextProjectId = highestId + 1;
+      })).subscribe())
   }
 
-  onSelectGoal(goal: Goal): void {
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
+  onSelectGoal(goal: string): void {
     console.log('[GoalsComponent] onSelectGoal, ' + goal)
-    switch (goal.key) {
-      case 'education':
+    this.selectedGoal = goal;
+    switch (goal) {
+      case GoalEnum.EDUCATION:
         this.currentUrl = this.equalEducationUrl;
         break;
-      case 'environment':
+      case GoalEnum.ENVIRONMENT:
         this.currentUrl = this.environmentUrl;
         break;
-      case 'sanitation':
+      case GoalEnum.SANITATION:
         this.currentUrl = this.sanitationUrl;
         break;
-      case 'health':
+      case GoalEnum.HEALTH:
         this.currentUrl = this.healthUrl;
         break;
-      case 'inequality':
+      case GoalEnum.INEQUALITY:
         this.currentUrl = this.inequalityUrl;
         break;
       default:
@@ -62,4 +81,40 @@ export class GoalsComponent implements OnInit {
         break;
     }
   }
+
+  onViewProjects(goal: string): void {
+    const filters = new Map<string, string>();
+    filters.set('goal', goal)
+    this.projectService.filters = filters;
+    this.router.navigateByUrl('projects');
+  }
+
+  onCreateRelatedProject(goal: string): void {
+    this.addProjectModalService.openModal(this.nextProjectId, goal);
+  }
+
+  onAmericasMapClick(): void {
+    const filters = new Map<string, string>();
+    filters.set('region', 'Americas');
+    filters.set('goal', this.selectedGoal);
+    this.projectService.filters = filters;
+    this.router.navigateByUrl('projects');
+  }
+
+  onEmeaMapClick(): void {
+    const filters = new Map<string, string>();
+    filters.set('region', 'EMEA');
+    filters.set('goal', this.selectedGoal);
+    this.projectService.filters = filters;
+    this.router.navigateByUrl('projects');
+  }
+
+  onApacMapClick(): void {
+    const filters = new Map<string, string>();
+    filters.set('region', 'APAC');
+    filters.set('goal', this.selectedGoal);
+    this.projectService.filters = filters;
+    this.router.navigateByUrl('projects');
+  }
+
 }

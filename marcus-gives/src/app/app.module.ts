@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import {ProjectsComponent} from "./pages/projects/projects.component";
 import {ClientsComponent} from "./pages/clients/clients.component";
 import {GoalsComponent} from "./pages/goals/goals.component";
-import {CommonModule} from "@angular/common";
+import {CommonModule, DatePipe} from "@angular/common";
 import {ProjectService} from "./services/project.service";
 import {HTTP_INTERCEPTORS, HttpClientModule, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {ClientRequestService} from "./services/client-request.service";
@@ -22,7 +22,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {LoginComponent} from "./pages/login/login.component";
 import {AdvisorService} from "./services/advisor.service";
 import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
-import {ClientQuestionsComponent} from "./pages/clients/client-questions/client-questions.component";
+import {AccordionConfig, AccordionModule} from "ngx-bootstrap/accordion";
 
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
@@ -44,8 +44,7 @@ export class XhrInterceptor implements HttpInterceptor {
     NavigationComponent,
     ClientGridComponent,
     ClientProfileComponent,
-    ClientQuestionsComponent,
-    LoginComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +54,8 @@ export class XhrInterceptor implements HttpInterceptor {
     ComponentsModule,
     AgGridModule.withComponents([]),
     ReactiveFormsModule,
-    ModalModule
+    ModalModule,
+    AccordionModule.forRoot(),
   ],
   providers: [
     ProjectService,
@@ -64,8 +64,11 @@ export class XhrInterceptor implements HttpInterceptor {
     AdvisorService,
     AppService,
     BsModalService,
-    { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    {provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: AccordionConfig, useValue: {closeOthers: true}},
+  ],
+  exports: [
   ],
   bootstrap: [AppComponent]
 })

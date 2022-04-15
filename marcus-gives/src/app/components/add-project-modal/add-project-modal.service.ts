@@ -1,4 +1,4 @@
-import {Component, Injectable} from "@angular/core";
+import {Injectable} from "@angular/core";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {AddProjectModalComponent} from "./add-project-modal.component";
 
@@ -8,11 +8,13 @@ export class AddProjectModalService {
 
   constructor(private modalService: BsModalService){}
 
-  openModal(){
+  openModal(nextId: number, goalValue?: string){
     this.modalRef = this.modalService.show(AddProjectModalComponent);
+    this.modalRef.content.nextId = nextId
+    this.modalRef.content.goalValue = goalValue
   }
 
   closeModal(){
-    this.modalRef.hide();
+    this.modalRef.hide()
   }
 }

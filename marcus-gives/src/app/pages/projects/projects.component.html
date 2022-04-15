@@ -1,4 +1,6 @@
-<div class="container" style="background-color: lightgrey">
+<div class="container" style="background-color: #F5F5F5">
+  <h5 class="pt-2">{{title}}</h5>
+  <button *ngIf="filters" type=button class="btn btn-secondary btn-sm"  (click)="resetFilters()"> View All Projects </button>
     <div class="row">
     <div *ngFor="let project of projects | async" class="card"  style="outline: black">
       <h5 class="card-title" ><button class="btn btn-secondary" style="background: none; color: black; font-weight: bold; border: none;" type="button" (click)="openViewModal(project)">{{project.name}}</button></h5>
@@ -13,7 +15,7 @@
       </div>
     </div>
     </div>
-  <div *ngIf="advisor" class="p-1">
-    <button class="btn btn-primary btn-sm" type="button" (click)="openAddModal()"> New Project</button>
+  <div *ngIf="isAdvisor" class="p-1">
+    <button class="btn btn-primary btn-sm pb-1" type="button" (click)="openAddModal()"> New Project</button>
   </div>
 </div>

@@ -7,16 +7,16 @@ import {catchError, Observable} from "rxjs";
 @Injectable()
 export class ClientRequestService {
   baseUrl = environment.baseUrl;
+  headers = new HttpHeaders()
+    .set('content-type', 'application/json')
+    .set('Access-Control-Allow-Origin', '*');
 
   constructor(private http: HttpClient) {
   }
 
   getClients(): Observable<Client[]>{
-    const headers= new HttpHeaders()
-      .set('content-type', 'application/json')
-      .set('Access-Control-Allow-Origin', '*')
     return this.http.get<Client[]>(`${this.baseUrl}/clients`, {
-      headers: headers
+      headers: this.headers
     }).pipe(
       catchError((error) => {
         console.log('Find clients failed with error', error);
@@ -25,11 +25,8 @@ export class ClientRequestService {
   }
 
   getClient(clientId: number): Observable<Client> {
-    const headers= new HttpHeaders()
-      .set('content-type', 'application/json')
-      .set('Access-Control-Allow-Origin', '*')
     return this.http.get<Client>(`${this.baseUrl}/client/${clientId}`, {
-      headers: headers
+      headers: this.headers
     }).pipe(
       catchError((error) => {
         console.log('Find client failed with error', error);
@@ -38,11 +35,8 @@ export class ClientRequestService {
   }
 
   getClientFromUsername(clientUsername: string): Observable<Client> {
-    const headers= new HttpHeaders()
-      .set('content-type', 'application/json')
-      .set('Access-Control-Allow-Origin', '*')
     return this.http.get<Client>(`${this.baseUrl}/client/username/${clientUsername}`, {
-      headers: headers
+      headers: this.headers
     }).pipe(
       catchError((error) => {
         console.log('Find client failed with error', error);
@@ -51,11 +45,14 @@ export class ClientRequestService {
   }
 
   createClient(client: Client): Observable<Client> {
-    const headers= new HttpHeaders()
-      .set('content-type', 'application/json')
-      .set('Access-Control-Allow-Origin', '*')
     return this.http.post<Client>(`${this.baseUrl}/addClient`, client, {
-      headers: headers
+      headers: this.headers
+    })
+  }
+
+  updateClient(client: Client): Observable<Client> {
+    return this.http.put<Client>(`${this.baseUrl}/updateClient/${client.id}`, client, {
+      headers: this.headers
     })
   }
 }

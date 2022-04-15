@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { map} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {AuthenticationService} from "../../services/authentication.service";
 
 
@@ -38,10 +38,14 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-    this.loading = true;
     this.authenticationService.login(this.form['username'].value, this.form['password'].value).pipe(
       map(() => {
           return this.router.navigate(['goals'])
-        })).subscribe();
+        }),
+      catchError((error) => {
+        this.error = error;
+        this.loginForm.reset();
+        throw error;
+      })).subscribe();
   }
 }

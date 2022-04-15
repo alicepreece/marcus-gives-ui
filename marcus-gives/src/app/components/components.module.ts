@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {AddProjectModalComponent} from "./add-project-modal/add-project-modal.component";
-import {ClientPreferenceModalComponent} from "./client-preference-modal/client-preference-modal.component";
+import {UpdatePreferencesModalComponent} from "./update-preferences-modal/update-preferences-modal.component";
 import {ViewProjectModalComponent} from "./view-project-modal/view-project-modal.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
@@ -8,18 +8,25 @@ import {ViewProjectModalService} from "./view-project-modal/view-project-modal.s
 import {AddProjectModalService} from "./add-project-modal/add-project-modal.service";
 import {ViewClientModalComponent} from "./view-client-modal/view-client-modal.component";
 import {ViewClientModalService} from "./view-client-modal/view-client-modal.service";
+import {UpdateProjectModalComponent} from "./ update-project-modal/update-project-modal.component";
+import {UpdateProjectModalService} from "./ update-project-modal/update-project-modal.service";
+import {UpdatePreferencesModalService} from "./update-preferences-modal/update-preferences-modal.service";
+import {ClientQuestionsComponent} from "./client-questions/client-questions.component";
 
 @NgModule({
   declarations: [
     AddProjectModalComponent,
-    ClientPreferenceModalComponent,
+    UpdatePreferencesModalComponent,
     ViewProjectModalComponent,
-    ViewClientModalComponent
+    ViewClientModalComponent,
+    UpdateProjectModalComponent,
+    ClientQuestionsComponent,
   ],
   exports: [
     AddProjectModalComponent,
-    ClientPreferenceModalComponent,
-    ViewProjectModalComponent
+    UpdatePreferencesModalComponent,
+    ViewProjectModalComponent,
+    ClientQuestionsComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +35,9 @@ import {ViewClientModalService} from "./view-client-modal/view-client-modal.serv
   providers: [
     ViewProjectModalService,
     AddProjectModalService,
-    ViewClientModalService
+    ViewClientModalService,
+    UpdateProjectModalService,
+    UpdatePreferencesModalService
   ]
 })
 export class ComponentsModule{}

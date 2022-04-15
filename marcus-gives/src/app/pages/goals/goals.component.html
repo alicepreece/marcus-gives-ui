@@ -1,15 +1,44 @@
 <div style="background-color: rgba(173, 195, 209, 0.2); height: 100vh; width: 100vw">
   <div class="container mt-5">
   <div class="row pt-2">
-    <div class="col">
+    <div class="col" id="iframediv">
+      <div id="americasMap" class="overlay" style="left: 16vw; width: 16vw" (click)="onAmericasMapClick()"></div>
+      <div id="emeaMap" class="overlay" style="left: 32vw; width: 10vw" (click)="onEmeaMapClick()"></div>
+      <div id="apacMap" class="overlay" style="left: 42vw; width: 15vw" (click)="onApacMapClick()"></div>
       <iframe [src]="currentUrl"
-              style="width: 45vw; height: 60vh"></iframe>
+              style="width: 45vw; height: 60vh; pointer-events: visiblePainted"></iframe>
     </div>
-    <div class="col">
-      <div *ngFor="let goal of goals" class="row">
-      <button type="button" class="goalOptions btn btn-secondary btn-sm m-1" (click)="onSelectGoal(goal)">{{goal.displayName}}</button>
+    <div class="col" style="max-width: 40vw">
+      <div class="accordion" id="accordionExample">
+        <div *ngFor="let goal of goals; let i=index" class="accordion-item" style="background-color: white !important;">
+          <h2 class="accordion-header" [id]="'heading' + i">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#goal' + i" aria-expanded="true" [attr.aria-controls]="'goal' + i">
+              {{goal.value}}
+            </button>
+          </h2>
+          <div [id]="'goal' + i" class="accordion-collapse collapse" data-bs-parent="#accordionExample" [attr.aria-labelledby]="'heading' + i">
+            <div class="accordion-body">
+              <ng-container *ngTemplateOutlet="buttons; context: {goal: goal}"></ng-container>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 </div>
+
+<ng-template #buttons let-goal="goal">
+  <p>
+    <span>
+      <button type="button" class="btn btn-secondary-outline btn-sm m-1 p-0" style="color: dodgerblue"
+              (click)="onSelectGoal(goal.value)">View Map</button>
+      |
+    <button type="button" class="btn btn-secondary-outline btn-sm m-1 p-0" style="color: dodgerblue"
+            (click)="onViewProjects(goal.value)">View Related Projects</button>
+      |
+    <button type="button" class="btn btn-secondary-outline btn-sm m-1 p-0" style="color: dodgerblue"
+            (click)="onCreateRelatedProject(goal.value)">Create Related Project</button>
+  </span>
+  </p>
+</ng-template>

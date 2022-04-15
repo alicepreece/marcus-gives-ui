@@ -21,11 +21,13 @@ export class ClientGridComponent implements OnInit, OnDestroy {
   advisor: Advisor;
 
   columnDefs: ColDef[] = [
-    { headerName: 'Client ID', field: 'id' },
-    { headerName: 'FirstName', field: 'user.firstName' },
-    { headerName: 'Surname', field: 'user.lastName' },
-    { headerName: 'Account Number', field: 'accountNumber' },
-    { headerName: 'Active Projects', field: 'projects', valueFormatter: this.formatList}
+    { headerName: 'ID', field: 'id', width: 70 },
+    { headerName: 'FirstName', field: 'user.firstName', width: 120 },
+    { headerName: 'Surname', field: 'user.lastName', width: 120 },
+    { headerName: 'Account Number', field: 'accountNumber', width: 120 },
+    { headerName: 'No. Active Projects', field: 'projects', valueFormatter: this.formatCount, minWidth: 120},
+    { headerName: 'Email', field: 'emailAddress', minWidth: 175},
+    { headerName: 'Amount Available', field: 'investableAmount', minWidth: 120}
   ];
 
   gridOptions = {
@@ -42,7 +44,7 @@ export class ClientGridComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log('[ClientGridComponent] init');
     if (this.authenticationService.userValue) {
-      console.log('clientgridcomponent', this.authenticationService.userValue);
+      console.log('clientGridComponent', this.authenticationService.userValue);
       this.subscriptions.add(this.authenticationService.user.subscribe((user) => {
         console.log('user returned', user);
         this.advisorUser = user!;
@@ -63,7 +65,7 @@ export class ClientGridComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  formatList(params: any): string {
+  formatCount(params: any): string {
     let arrayLength: number = 0;
     for (let value in params.value) {
       arrayLength += 1;
@@ -74,6 +76,7 @@ export class ClientGridComponent implements OnInit, OnDestroy {
   closeOffcanvas(): void {
     const panel = document.getElementById("closeButton")
     panel!.click();
+    this.ngOnInit();
   }
 
   openClientProfile(event: RowClickedEvent): void {

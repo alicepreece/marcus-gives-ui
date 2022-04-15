@@ -1,4 +1,8 @@
-.goalOptions {
-  align-content: center;
-  width: 10rem;
+.overlay {
+  background-color: transparent;
+  position: absolute;
+  height: 60vh;
+  width: 15vw;
+  z-index:10;
+  cursor: pointer;
 }

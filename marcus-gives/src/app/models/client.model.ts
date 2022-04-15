@@ -1,5 +1,6 @@
 import {User} from "./user.model";
 import {Scores} from "./scores.model";
+import {Donation} from "./donation.model";
 
 export class Client {
   id: number;
@@ -7,8 +8,8 @@ export class Client {
   accountNumber: string;
   emailAddress: string;
   recommendation: string;
-  projects: number[];
-  pastProjects: number[];
+  donations: Donation[];
+  pastDonations: Donation[];
   investableAmount: number;
   advisorTeam: string;
   scores?: Scores;

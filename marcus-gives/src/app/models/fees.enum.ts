@@ -1,5 +1,5 @@
 export enum FeesEnum {
-  NONE=0,
-  UNDER5=1,
-  OVER5=2,
+  NONE= 'NONE',
+  UNDER5= 'UNDER5',
+  OVER5= 'OVER5',
 }

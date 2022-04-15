@@ -3,6 +3,8 @@ import {Client} from "../../models/client.model";
 import {ViewClientModalService} from "./view-client-modal.service";
 import {Project} from "../../models/project.model";
 import {ProjectService} from "../../services/project.service";
+import {Donation} from "../../models/donation.model";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'view-client-modal-component',
@@ -11,28 +13,33 @@ import {ProjectService} from "../../services/project.service";
 })
 export class ViewClientModalComponent implements OnInit {
   client: Client;
-  currentProjects: Project[] = [];
-  pastProjects: Project[] = [];
+  currentDonations: Project[] = [];
+  pastDonations: Project[] = [];
+  subscriptions: Subscription = new Subscription();
 
   constructor(private viewClientModalService: ViewClientModalService, private projectService: ProjectService) {
   }
 
   ngOnInit(): void {
     this.client = this.viewClientModalService.client;
-    this.client.projects.forEach((project: number) => {
-      this.projectService.getProject(project).subscribe(
+    this.client.donations?.forEach((donation: Donation) => {
+      this.subscriptions.add(this.projectService.getProject(donation.project.id).subscribe(
         (project: Project) => {
-          this.currentProjects.push(project);
+          this.currentDonations.push(project);
           return project;
-        });
+        }));
     })
-    this.client.pastProjects.forEach((project: number) => {
-      this.projectService.getProject(project).subscribe(
+    this.client.pastDonations?.forEach((donation: Donation) => {
+      this.subscriptions.add(this.projectService.getProject(donation.project.id).subscribe(
         (project: Project) => {
-          this.pastProjects.push(project);
+          this.pastDonations.push(project);
           return project;
-        });
+        }));
     })
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   closeModal(){
