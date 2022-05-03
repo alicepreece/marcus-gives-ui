@@ -21,7 +21,6 @@ export class ClientProfileComponent implements OnInit {
   subscriptions: Subscription = new Subscription();
 
   constructor(private clientRequestService: ClientRequestService,
-              private projectService: ProjectService,
               private authenticationService: AuthenticationService,
               private updatePreferencesModalService: UpdatePreferencesModalService) {
   }
@@ -33,14 +32,17 @@ export class ClientProfileComponent implements OnInit {
       this.subscriptions.add(this.clientRequestService.getClientFromUsername(this.clientUser.username).pipe(
         map((client: Client) => {
           this.client = client;
+          if (!this.client.pastDonations) {
+            this.client.pastDonations = []
+          }
+          if (!this.client.donations) {
+            this.client.donations = []
+          }
           if(client.donations) {
-          client.donations.forEach((donation: Donation) => {
-            this.projectService.getProject(donation.project.id).subscribe(
-              (project: Project) => {
-                this.currentProjects.push(project);
-                return project;
-              });
-          })}
+            client.donations.forEach((donation: Donation) => {
+              this.currentProjects.push(donation.project);
+            });
+          }
           console.log("client", client);
           return client;
         })

@@ -13,6 +13,7 @@ export class NavigationComponent implements OnInit {
   navItems: {name: string, link: string}[];
   loggedIn: boolean;
   advisor: boolean;
+  admin: boolean;
   subscriptions = new Subscription();
 
   constructor(private authenticationService: AuthenticationService, private router: Router) {
@@ -24,6 +25,7 @@ export class NavigationComponent implements OnInit {
       this.loggedIn = value;
       if (value) {
         this.advisor = this.authenticationService.userValue!.role === RoleEnum.ADVISOR;
+        this.admin = this.authenticationService.userValue!.role === RoleEnum.ADMIN;
         this.navItems = [
           {
             name: 'Goals',
@@ -34,8 +36,8 @@ export class NavigationComponent implements OnInit {
             link: 'projects'
           },
           {
-            name: this.advisor ? 'My Clients' : 'My Account',
-            link: 'clients'
+            name: this.advisor ? 'My Clients' : (this.admin ? 'Manage' : 'My Account'),
+            link: this.admin ? 'admin' : 'clients'
           },
         ]
       }

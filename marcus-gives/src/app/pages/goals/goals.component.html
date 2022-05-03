@@ -2,17 +2,20 @@
   <div class="container mt-5">
   <div class="row pt-2">
     <div class="col" id="iframediv">
-      <div id="americasMap" class="overlay" style="left: 16vw; width: 16vw" (click)="onAmericasMapClick()"></div>
-      <div id="emeaMap" class="overlay" style="left: 32vw; width: 10vw" (click)="onEmeaMapClick()"></div>
-      <div id="apacMap" class="overlay" style="left: 42vw; width: 15vw" (click)="onApacMapClick()"></div>
+      <h5>Chosen Statistics for {{selectedGoal}} Goal</h5>
+      <div id="americasMap" class="overlay" style="left: 17vw; width: 16vw" (click)="onAmericasMapClick()"></div>
+      <div id="emeaMap" class="overlay" style="left: 33vw; width: 10vw" (click)="onEmeaMapClick()"></div>
+      <div id="apacMap" class="overlay" style="left: 43vw; width: 16vw" (click)="onApacMapClick()"></div>
       <iframe [src]="currentUrl"
               style="width: 45vw; height: 60vh; pointer-events: visiblePainted"></iframe>
     </div>
     <div class="col" style="max-width: 40vw">
+      <h5>Development Goals</h5>
+      <!-- Accordion documentation from: https://getbootstrap.com/docs/5.0/components/accordion/-->
       <div class="accordion" id="accordionExample">
-        <div *ngFor="let goal of goals; let i=index" class="accordion-item" style="background-color: white !important;">
+        <div *ngFor="let goal of goals; let i=index" class="accordion-item">
           <h2 class="accordion-header" [id]="'heading' + i">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#goal' + i" aria-expanded="true" [attr.aria-controls]="'goal' + i">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#goal' + i" aria-expanded="false" [attr.aria-controls]="'goal' + i">
               {{goal.value}}
             </button>
           </h2>
@@ -37,7 +40,7 @@
     <button type="button" class="btn btn-secondary-outline btn-sm m-1 p-0" style="color: dodgerblue"
             (click)="onViewProjects(goal.value)">View Related Projects</button>
       |
-    <button type="button" class="btn btn-secondary-outline btn-sm m-1 p-0" style="color: dodgerblue"
+    <button *ngIf="isAdvisor" type="button" class="btn btn-secondary-outline btn-sm m-1 p-0" style="color: dodgerblue"
             (click)="onCreateRelatedProject(goal.value)">Create Related Project</button>
   </span>
   </p>

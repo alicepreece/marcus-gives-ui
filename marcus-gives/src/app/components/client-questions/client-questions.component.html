@@ -1,4 +1,6 @@
+<!--Modal documentation: https://valor-software.com/ngx-bootstrap/#/components/modals?tab=overview-->
 <div class="offcanvas-body pt-1">
+  <!--NgForm Documentation: -->
   <form [formGroup]="createClientForm" (ngSubmit)="onSubmit()">
     <div class="form-group mb-1">
       <div class="mb-1">
@@ -15,14 +17,14 @@
       </div>
       <div class="mb-1">
         <label for="accountnumber" class="form-label">Account Number</label>
-        <input type="text" class="form-control" formControlName="accountnumber" id="accountnumber" [ngModel]="defaultClient?.accountNumber">
+        <input type="text" class="form-control" formControlName="accountnumber" id="accountnumber">
       </div>
       <div class="mb-1">
         <label for="advisorteam" class="form-label">Advisor Team</label>
-        <input type="text" class="form-control" formControlName="advisorteam" id="advisorteam" [disabled]="defaultClient != undefined">
+        <input type="text" class="form-control" formControlName="advisorteam" id="advisorteam">
       </div>
       <div class="mb-1">
-        <label for="donationamount" class="form-label">Amount to Donate</label>
+        <label for="donationamount" class="form-label">Amount to Donate (£ / Month)</label>
         <input type="text" class="form-control" formControlName="donationamount" id="donationamount" [ngModel]="defaultClient?.investableAmount">
       </div>
     </div>
@@ -30,13 +32,13 @@
     <div class="mb-2">
       <label>{{questions.QU1}}</label>
       <div class="form-check">
-        <input class="form-check-input" type="radio" formControlName="qu1" [value]=true id="q1social" [ngModel]="defaultClient?.scores?.socialOverEnv">
+        <input class="form-check-input" type="radio" formControlName="qu1" [value]=true id="q1social" [ngModel]="update ? defaultClient?.scores?.socialOverEnv : ''">
         <label class="form-check-label" for="q1social">
           Social
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="radio" formControlName="qu1" [value]=false id="q1environmental" [ngModel]="!defaultClient?.scores?.socialOverEnv">
+        <input class="form-check-input" type="radio" formControlName="qu1" [value]=false id="q1environmental" [ngModel]="update ? !defaultClient?.scores?.socialOverEnv: ''">
         <label class="form-check-label" for="q1environmental">
           Environmental
         </label>
@@ -45,13 +47,13 @@
     <div class="mb-2">
       <label>{{questions.QU2}}</label>
       <div class="form-check">
-        <input class="form-check-input" type="radio" formControlName="qu2" [value]=true id="q2economy"  [ngModel]="defaultClient?.scores?.economyOverHealthcare">
+        <input class="form-check-input" type="radio" formControlName="qu2" [value]=true id="q2economy"  [ngModel]="update ? defaultClient?.scores?.economyOverHealthcare : ''">
         <label class="form-check-label" for="q2economy">
           Economy
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="radio" formControlName="qu2" [value]=false id="q2healthcare" [ngModel]="!defaultClient?.scores?.economyOverHealthcare">
+        <input class="form-check-input" type="radio" formControlName="qu2" [value]=false id="q2healthcare" [ngModel]="update ? !defaultClient?.scores?.economyOverHealthcare : ''">
         <label class="form-check-label" for="q2healthcare">
           Health
         </label>
@@ -60,13 +62,13 @@
     <div class="mb-2">
       <label>{{questions.QU3}}</label>
       <div class="form-check">
-        <input class="form-check-input" type="radio" formControlName="qu3" [value]=true id="q3poverty"  [ngModel]="defaultClient?.scores?.povertyOverEducation">
+        <input class="form-check-input" type="radio" formControlName="qu3" [value]=true id="q3poverty"  [ngModel]="update  ? defaultClient?.scores?.povertyOverEducation : ''">
         <label class="form-check-label" for="q3poverty">
           Poverty
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="radio" formControlName="qu3" [value]=false id="q3education" [ngModel]="!defaultClient?.scores?.povertyOverEducation">
+        <input class="form-check-input" type="radio" formControlName="qu3" [value]=false id="q3education" [ngModel]="update  ? !defaultClient?.scores?.povertyOverEducation : ''">
         <label class="form-check-label" for="q3education">
           Education
         </label>
@@ -75,13 +77,13 @@
     <div class="mb-2">
       <label>{{questions.QU4}}</label>
       <div class="form-check">
-        <input class="form-check-input" type="radio" formControlName="qu4" [value]=true id="q4targeted" [ngModel]="!defaultClient?.scores?.targetedOverDiverse">
+        <input class="form-check-input" type="radio" formControlName="qu4" [value]=true id="q4targeted" [ngModel]="update ? !defaultClient?.scores?.targetedOverDiverse : ''">
         <label class="form-check-label" for="q4targeted">
           Targeted Strategy
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="radio" formControlName="qu4" [value]=false id="q4diverse" [ngModel]="!defaultClient?.scores?.targetedOverDiverse">
+        <input class="form-check-input" type="radio" formControlName="qu4" [value]=false id="q4diverse" [ngModel]="update ? !defaultClient?.scores?.targetedOverDiverse : ''">
         <label class="form-check-label" for="q4diverse">
           Diverse Strategy
         </label>
@@ -96,13 +98,13 @@
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="radio" formControlName="qu5" [value]="'UNDER5'" id="q5under5" [ngModel]="defaultClient?.scores?.managementFees">
+        <input class="form-check-input" type="radio" formControlName="qu5" [value]="'UNDER5'" id="q5under5" [ngModel]="update ? defaultClient?.scores?.managementFees : ''">
         <label class="form-check-label" for="q5under5">
           < 5
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="radio" formControlName="qu5" [value]="'OVER5'" id="q5over5" [ngModel]="defaultClient?.scores?.managementFees">
+        <input class="form-check-input" type="radio" formControlName="qu5" [value]="'OVER5'" id="q5over5" [ngModel]="update ? defaultClient?.scores?.managementFees : ''">
         <label class="form-check-label" for="q5over5">
           > 5
         </label>
@@ -111,13 +113,13 @@
     <div class="mb-2">
       <label>{{questions.QU6}}</label>
       <div class="form-check">
-        <input class="form-check-input" type="radio" formControlName="qu6" [value]=true id="q6esg" [ngModel]="defaultClient?.scores?.esgOverAll">
+        <input class="form-check-input" type="radio" formControlName="qu6" [value]=true id="q6esg" [ngModel]="update ? defaultClient?.scores?.esgOverAll : ''">
         <label class="form-check-label" for="q6esg">
           Only ESG Investments
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="radio" formControlName="qu6" [value]=false id="q6all" [ngModel]="!defaultClient?.scores?.esgOverAll">
+        <input class="form-check-input" type="radio" formControlName="qu6" [value]=false id="q6all" [ngModel]="update ? !defaultClient?.scores?.esgOverAll : ''">
         <label class="form-check-label" for="q6all">
           All Investments
         </label>
@@ -126,13 +128,13 @@
     <div class="mb-2">
       <label>{{questions.QU7}}</label>
       <div class="form-check">
-        <input class="form-check-input" type="radio" formControlName="qu7" [value]=true id="q7short" [ngModel]="defaultClient?.scores?.shortOverLongTerm">
+        <input class="form-check-input" type="radio" formControlName="qu7" [value]=true id="q7short" [ngModel]="update ? defaultClient?.scores?.shortOverLongTerm : ''">
         <label class="form-check-label" for="q7short">
           Short Term (Disaster relief etc)
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="radio" formControlName="qu7" [value]=false id="q7long" [ngModel]="!defaultClient?.scores?.shortOverLongTerm">
+        <input class="form-check-input" type="radio" formControlName="qu7" [value]=false id="q7long" [ngModel]="update ? !defaultClient?.scores?.shortOverLongTerm : ''">
         <label class="form-check-label" for="q7long">
           Long Term
         </label>
@@ -141,55 +143,56 @@
     <div class="mb-2">
       <label>{{questions.QU8}}</label>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" formControlName="qu8a" value="S.America" id="q8SA" [checked]="defaultClient?.scores?.region?.includes(RegionEnum.SAMERICA)">
+        <input class="form-check-input" type="checkbox" formControlName="qu8a" value="S.America" id="q8SA" [ngModel]="defaultClient?.scores?.region?.includes(RegionEnum.SAMERICA)">
         <label class="form-check-label" for="q8SA">
           South America
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" formControlName="qu8b" value="N.America" id="q8NA" [checked]="defaultClient?.scores?.region?.includes(RegionEnum.NAMERICA)">
+        <input class="form-check-input" type="checkbox" formControlName="qu8b" value="N.America" id="q8NA" [ngModel]="defaultClient?.scores?.region?.includes(RegionEnum.NAMERICA)">
         <label class="form-check-label" for="q8NA">
           North America
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" formControlName="qu8c" value="Africa" id="q8A" [checked]="defaultClient?.scores?.region?.includes(RegionEnum.AFRICA)">
+        <input class="form-check-input" type="checkbox" formControlName="qu8c" value="Africa" id="q8A" [ngModel]="defaultClient?.scores?.region?.includes(RegionEnum.AFRICA)">
         <label class="form-check-label" for="q8A">
           Africa
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" formControlName="qu8d" value="Europe" id="q8E" [checked]="defaultClient?.scores?.region?.includes(RegionEnum.EUROPE)">
+        <input class="form-check-input" type="checkbox" formControlName="qu8d" value="Europe" id="q8E" [ngModel]="defaultClient?.scores?.region?.includes(RegionEnum.EUROPE)">
         <label class="form-check-label" for="q8E">
           Europe
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" formControlName="qu8e" value="Middle East" id="q8ME" [checked]="defaultClient?.scores?.region?.includes(RegionEnum.MEAST)">
+        <input class="form-check-input" type="checkbox" formControlName="qu8e" value="Middle East" id="q8ME" [ngModel]="defaultClient?.scores?.region?.includes(RegionEnum.MEAST)">
         <label class="form-check-label" for="q8ME">
           Middle East
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" formControlName="qu8f" value="Central & South Asia" id="q8As" [checked]="defaultClient?.scores?.region?.includes(RegionEnum.CANDSASIA)">
+        <input class="form-check-input" type="checkbox" formControlName="qu8f" value="Central & South Asia" id="q8As" [ngModel]="defaultClient?.scores?.region?.includes(RegionEnum.CANDSASIA)">
         <label class="form-check-label" for="q8As">
           Central & South Asia
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" formControlName="qu8g" value="East & South East Asia" id="q8EAs" [checked]="defaultClient?.scores?.region?.includes(RegionEnum.EANDSEASIA)">
+        <input class="form-check-input" type="checkbox" formControlName="qu8g" value="East & South East Asia" id="q8EAs" [ngModel]="defaultClient?.scores?.region?.includes(RegionEnum.EANDSEASIA)">
         <label class="form-check-label" for="q8EAs">
           East & South East Asia
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" formControlName="qu8h" value="Oceania" id="q8O" [checked]="defaultClient?.scores?.region?.includes(RegionEnum.OCEANIA)">
+        <input class="form-check-input" type="checkbox" formControlName="qu8h" value="Oceania" id="q8O" [ngModel]="defaultClient?.scores?.region?.includes(RegionEnum.OCEANIA)">
         <label class="form-check-label" for="q8O">
           Oceania / Australasia
         </label>
       </div>
     </div>
-    <button [disabled]="formIncomplete()" class="btn btn-primary btn-sm">Update Client</button>
+    <button *ngIf="update" [disabled]="formIncomplete()" class="btn btn-primary btn-sm">Update Client</button>
+    <button *ngIf="!update" [disabled]="formIncomplete()" class="btn btn-primary btn-sm">Create Client</button>
   </form>
 </div>
 

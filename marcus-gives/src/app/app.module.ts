@@ -23,6 +23,7 @@ import {LoginComponent} from "./pages/login/login.component";
 import {AdvisorService} from "./services/advisor.service";
 import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
 import {AccordionConfig, AccordionModule} from "ngx-bootstrap/accordion";
+import {AdminComponent} from "./pages/admin/admin.component";
 
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
@@ -44,7 +45,8 @@ export class XhrInterceptor implements HttpInterceptor {
     NavigationComponent,
     ClientGridComponent,
     ClientProfileComponent,
-    LoginComponent
+    LoginComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

@@ -5,12 +5,14 @@ import {ProjectsComponent} from "./pages/projects/projects.component";
 import {ClientsComponent} from "./pages/clients/clients.component";
 import {LoginComponent} from "./pages/login/login.component";
 import {AuthGuard} from "./services/auth.guard";
+import {AdminComponent} from "./pages/admin/admin.component";
 
 const routes: Routes = [
   {path: 'goals', component: GoalsComponent, canActivate: [AuthGuard]},
   {path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard]},
   {path: 'clients', component: ClientsComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
+  {path: 'admin', component: AdminComponent},
   { path: '', pathMatch: 'full', redirectTo: 'login' }
 ];
 export const routing: ModuleWithProviders<any> = RouterModule.forRoot(routes);

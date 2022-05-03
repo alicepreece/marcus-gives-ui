@@ -40,7 +40,7 @@ export class ViewProjectModalComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private clientService: ClientRequestService,
     private projectService: ProjectService,
-    private formBuilder: FormBuilder
+    public formBuilder: FormBuilder
   ) {
   }
 

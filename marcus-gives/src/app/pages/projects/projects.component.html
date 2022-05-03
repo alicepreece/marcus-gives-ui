@@ -2,8 +2,8 @@
   <h5 class="pt-2">{{title}}</h5>
   <button *ngIf="filters" type=button class="btn btn-secondary btn-sm"  (click)="resetFilters()"> View All Projects </button>
     <div class="row">
-    <div *ngFor="let project of projects | async" class="card"  style="outline: black">
-      <h5 class="card-title" ><button class="btn btn-secondary" style="background: none; color: black; font-weight: bold; border: none;" type="button" (click)="openViewModal(project)">{{project.name}}</button></h5>
+    <div *ngFor="let project of projects | async" class="card projectHover" style="outline: black" (click)="openViewModal(project)">
+      <h5 class="card-title" >{{project.name}}</h5>
       <div class="card-body" style="padding: 0.5rem">
         <p class="card-text">
           Region: {{project.region}} </p>

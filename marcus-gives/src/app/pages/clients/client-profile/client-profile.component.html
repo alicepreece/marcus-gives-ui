@@ -8,19 +8,19 @@
         </div>
         <div class="card-body">
           <p class="card-text row">
-            <span style="font-weight: bold" class="col">Account Number: </span> <span class="col">{{client.accountNumber}}</span>
+            <span style="font-weight: bold" class="col">Account Number: </span> <span class="col">{{client?.accountNumber}}</span>
           </p>
           <p class="card-text row">
-            <span style="font-weight: bold" class="col">First Name: </span> <span class="col"> {{client.user.firstName}}</span>
+            <span style="font-weight: bold" class="col">First Name: </span> <span class="col"> {{client?.user?.firstName}}</span>
           </p>
           <p class="card-text row">
-            <span style="font-weight: bold" class="col">Last Name: </span> <span class="col">{{client.user.lastName}}</span>
+            <span style="font-weight: bold" class="col">Last Name: </span> <span class="col">{{client?.user?.lastName}}</span>
           </p>
           <p class="card-text row">
-            <span style="font-weight: bold" class="col">Contact Email: </span> <span class="col">{{client.emailAddress}}</span>
+            <span style="font-weight: bold" class="col">Contact Email: </span> <span class="col">{{client?.emailAddress}}</span>
           </p>
           <p class="card-text row">
-            <span style="font-weight: bold" class="col">Recommended Project: </span> <span class="col">{{client.recommendation}}</span> </p>
+            <span style="font-weight: bold" class="col">Recommended Project: </span> <span class="col">{{client?.recommendation}}</span> </p>
           <div class="card-text">
             <span style="font-weight: bold;">Donations</span>
             <table *ngIf="(currentProjects.length > 0)" class="table">
@@ -54,10 +54,10 @@
         </div>
         <div class="card-body">
           <p class="card-text row">
-            <span style="font-weight: bold" class="col">Available to Invest: </span> <span class="col">{{client.investableAmount}} </span> </p>
+            <span style="font-weight: bold" class="col">Available to Invest (£): </span> <span class="col">{{client?.investableAmount}} </span> </p>
           <p class="card-text">
             <span style="font-weight: bold">Donation History</span>
-          <table *ngIf="(client.pastDonations.length > 0)" class="table">
+          <table *ngIf="(client.pastDonations!.length > 0)" class="table">
             <thead>
             <tr>
               <th><h6>Project</h6></th>
@@ -66,7 +66,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let donation of client.pastDonations">
+            <tr *ngFor="let donation of client?.pastDonations">
               <td>{{donation.project.name}}</td>
               <td>{{donation.amount}}</td>
               <td>{{donation.timestamp *1000 | date }}</td>

@@ -89,16 +89,14 @@ export class UpdateProjectModalComponent implements OnInit, OnDestroy {
     }
     this.subscriptions.add(this.projectService.addProject(project).pipe(
       map((response) => {
-        const element = document.getElementById("closeModal")
-        element!.click();
-        console.log(response)
-        this.router.navigate(['projects']);
+        this.closeModal();
         return;
       })).subscribe());
   }
 
   closeModal(){
     this.addProjectModalService.closeModal();
+
   }
 
   findStrategy(): void {

@@ -1,10 +1,13 @@
-import {Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {GoalEnum, GoalEnumList} from "../../models/goal.enum";
 import {ProjectService} from "../../services/project.service";
 import {Router} from "@angular/router";
 import {AddProjectModalService} from "../../components/add-project-modal/add-project-modal.service";
 import {map, Subscription} from "rxjs";
+import {AuthenticationService} from "../../services/authentication.service";
+import {RoleEnum} from "../../models/role.enum";
+import {Project} from "../../models/project.model";
 
 @Component({
   selector: 'goals-page-component',
@@ -23,12 +26,14 @@ export class GoalsComponent implements OnInit {
   nextProjectId: number;
   selectedGoal: string = 'No Poverty';
   subscriptions: Subscription = new Subscription();
+  isAdvisor: boolean = false;
 
   constructor(
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     private projectService: ProjectService,
     private router: Router,
-    private addProjectModalService: AddProjectModalService) {
+    private addProjectModalService: AddProjectModalService,
+    private authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {
@@ -38,11 +43,14 @@ export class GoalsComponent implements OnInit {
     this.environmentUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://ourworldindata.org/grapher/forest-area-as-share-of-land-area');
     this.sanitationUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://ourworldindata.org/explorers/water-and-sanitation?facet=none&Resource=Sanitation&Level+of+Access=Safely+managed&Residence=Total&Relative+to+population=Share+of+population&country=IND~USA~KEN~OWID_WRL~BGD~ZAF~CHN&hideControls=true');
     this.healthUrl = this.sanitizer.bypassSecurityTrustResourceUrl("https://ourworldindata.org/grapher/life-expectancy");
-    this.inequalityUrl = this.sanitizer.bypassSecurityTrustResourceUrl("https://ourworldindata.org/grapher/economic-inequality-gini-index");
+    this.inequalityUrl = this.sanitizer.bypassSecurityTrustResourceUrl("https://ourworldindata.org/grapher/economic-inequality-gini-index?tab=map");
     this.currentUrl = this.noPovertyUrl;
     this.goals = GoalEnumList;
+    if (this.authenticationService.userValue?.role === RoleEnum.ADVISOR) {
+      this.isAdvisor = true;
+    }
     this.subscriptions.add(this.projectService.getProjects().pipe(
-      map(projects => {
+      map((projects: Project[]) => {
         let highestId = 0;
         projects.forEach(project => {
           if (project.id > highestId) {

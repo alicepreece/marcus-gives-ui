@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Project} from "../models/project.model";
 import {environment} from "../../environments/environment";
-import {Observable, timestamp} from "rxjs";
+import {Observable} from "rxjs";
 import {Scores} from "../models/scores.model";
 import {Client} from "../models/client.model";
 import {DonationRequest} from "../models/donationRequest.model";

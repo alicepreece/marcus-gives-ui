@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {AddProjectModalComponent} from "./add-project-modal.component";
+import {GoalEnum} from "../../models/goal.enum";
 
 @Injectable()
 export class AddProjectModalService {

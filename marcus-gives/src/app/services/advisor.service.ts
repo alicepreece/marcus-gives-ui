@@ -7,16 +7,16 @@ import {Advisor} from "../models/advisor.model";
 @Injectable()
 export class AdvisorService {
   baseUrl = environment.baseUrl;
+  headers = new HttpHeaders()
+    .set('content-type', 'application/json')
+    .set('Access-Control-Allow-Origin', '*')
 
   constructor(private http: HttpClient) {
   }
 
   getAdvisors(): Observable<Advisor[]>{
-    const headers= new HttpHeaders()
-      .set('content-type', 'application/json')
-      .set('Access-Control-Allow-Origin', '*')
     return this.http.get<Advisor[]>(`${this.baseUrl}/advisors`, {
-      headers: headers
+      headers: this.headers
     }).pipe(
       catchError((error) => {
         console.log('Find clients failed with error', error);
@@ -24,29 +24,19 @@ export class AdvisorService {
       }));
   }
 
-  getClient(advisorId: number): Observable<Advisor> {
-    const headers= new HttpHeaders()
-      .set('content-type', 'application/json')
-      .set('Access-Control-Allow-Origin', '*')
-    return this.http.get<Advisor>(`${this.baseUrl}/advisor/${advisorId}`, {
-      headers: headers
+  getAdvisorFromUsername(advisorUsername: string): Observable<Advisor> {
+    return this.http.get<Advisor>(`${this.baseUrl}/advisor/username/${advisorUsername}`, {
+      headers: this.headers
     }).pipe(
       catchError((error) => {
-        console.log('Find client failed with error', error);
+        console.log('Find advisor failed with error', error);
         throw error;
       }));
   }
 
-  getAdvisorFromUsername(advisorUsername: string): Observable<Advisor> {
-    const headers= new HttpHeaders()
-      .set('content-type', 'application/json')
-      .set('Access-Control-Allow-Origin', '*')
-    return this.http.get<Advisor>(`${this.baseUrl}/advisor/username/${advisorUsername}`, {
-      headers: headers
-    }).pipe(
-      catchError((error) => {
-        console.log('Find client failed with error', error);
-        throw error;
-      }));
+  createAdvisor(advisor: Advisor): Observable<Advisor> {
+    return this.http.post<Advisor>(`${this.baseUrl}/addAdvisor`, advisor, {
+      headers: this.headers
+    })
   }
 }

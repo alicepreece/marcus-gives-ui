@@ -6,6 +6,6 @@ export enum Questions {
   QU5 = 'Are you willing to pay management fees?',
   QU6 = 'Do you want to only invest in ESG stock?',
   QU7 = 'Are you interested in short or long term impact?',
-  QU8 = 'Which region are you most passionate about?',
+  QU8 = 'Which regions are you most passionate about?',
 }
 

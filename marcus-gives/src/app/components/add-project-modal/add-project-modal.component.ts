@@ -6,7 +6,7 @@ import {Router} from "@angular/router";
 import {AddProjectModalService} from "./add-project-modal.service";
 import {Subscription} from "rxjs";
 import {RegionEnum, RegionEnumList} from "../../models/region.enum";
-import {GoalEnumList} from "src/app/models/goal.enum";
+import {GoalEnum, GoalEnumList} from "src/app/models/goal.enum";
 import {StrategyEnumList} from "../../models/strategy.enum";
 import {Scores} from "../../models/scores.model";
 import {FeesEnum} from "../../models/fees.enum";
@@ -19,6 +19,7 @@ import StrategyUtils from "../strategy.utils";
 })
 export class AddProjectModalComponent implements OnInit, OnDestroy {
   nextId: number;
+  goalValue: string | undefined;
   addProjectForm: FormGroup;
   submitted = false;
   error: string | undefined;

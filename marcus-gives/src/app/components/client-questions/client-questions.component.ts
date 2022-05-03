@@ -41,7 +41,7 @@ export class ClientQuestionsComponent implements OnInit, OnDestroy {
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       email: ['', Validators.required],
-      accountnumber: ['', Validators.required],
+      accountnumber: [{value: this.defaultClient?.accountNumber, disabled:this.update}, Validators.required],
       advisorteam: [{value: this.defaultClient?.advisorTeam, disabled:this.update} ,Validators.required],
       donationamount: ['', Validators.required],
       qu1: [''],
@@ -58,7 +58,7 @@ export class ClientQuestionsComponent implements OnInit, OnDestroy {
       qu8e: [''],
       qu8f: [''],
       qu8g: [''],
-      qu8h: ['']
+      qu8h: [''],
     });
   }
 
@@ -72,6 +72,8 @@ export class ClientQuestionsComponent implements OnInit, OnDestroy {
     let client = this.createClient();
     if (this.defaultClient) {
       client.id = this.defaultClient.id;
+      client.donations = this.defaultClient.donations;
+      client.pastDonations = this.defaultClient.pastDonations;
       this.subscriptions.add(this.clientRequestService.updateClient((client)).subscribe());
     } else {
       this.subscriptions.add(this.clientRequestService.createClient(client).subscribe());
@@ -87,7 +89,6 @@ export class ClientQuestionsComponent implements OnInit, OnDestroy {
     let client: Client = new Client();
     client.user = new User();
     client.scores = new Scores();
-    console.log(this.form);
     client.user.firstName = this.form['firstname'].value;
     client.user.lastName = this.form['lastname'].value;
     client.user.username = client.user.firstName[0].toLowerCase() + client.user.lastName.toLowerCase();

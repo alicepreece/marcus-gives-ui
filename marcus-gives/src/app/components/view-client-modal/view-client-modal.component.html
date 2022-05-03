@@ -1,3 +1,4 @@
+<!--Modal documentation: https://valor-software.com/ngx-bootstrap/#/components/modals?tab=overview-->
 <div class="modal-content">
   <div class="modal-header">
     <h5 class="modal-title" id="exampleModalLabel">{{client.user.firstName}} {{client.user.lastName}}</h5>
@@ -23,11 +24,14 @@
                   <th><h6>Aims</h6></th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody *ngIf="currentDonations.length > 0">
                 <tr *ngFor="let project of currentDonations">
                   <td>{{project?.name}}</td>
                   <td>{{project?.aims}}</td>
                 </tr>
+                </tbody>
+                <tbody *ngIf="currentDonations.length == 0">
+                <td>No donations made</td>
                 </tbody>
               </table>
             </div>
@@ -43,7 +47,7 @@
             <p class="card-text">
               <span style="font-weight: bold">Available to Invest: </span>{{client.investableAmount}} </p>
             <p class="card-text">
-              <span style="font-weight: bold">Previous Projects: </span><span *ngFor="let p of pastDonations">{{p?.name}}</span></p>
+              <span style="font-weight: bold">Previous Projects: </span><span *ngFor="let p of pastDonations">{{p?.name}}, </span></p>
           </div>
         </div>
       </div>

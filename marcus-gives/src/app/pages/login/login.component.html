@@ -1,4 +1,4 @@
-<div class="col-md-6 offset-md-3 mt-5">
+<div class="col-md-6 offset-md-4 mt-5" style="width: 30rem">
   <div class="card">
     <h4 class="card-header">Mary Gives Login</h4>
     <div class="card-body">
@@ -17,7 +17,7 @@
             <div *ngIf="form['password'].errors['required']">Password is required</div>
           </div>
         </div>
-        <button class="btn btn-primary">
+        <button class="btn btn-primary btn-sm mt-1">
           Login
         </button>
         <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>

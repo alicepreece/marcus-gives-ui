@@ -35,7 +35,7 @@ export class ProjectsComponent implements OnInit {
     console.log('[ProjectsComponent] onInit')
     this.filters = this.projectService.filters
     this.projects = this.projectService.getProjects().pipe(
-      map(projects => {
+      map((projects: Project[]) => {
         let highestId = 0;
         projects.forEach(project => {
           if (project.id > highestId) {
@@ -74,7 +74,7 @@ export class ProjectsComponent implements OnInit {
     const user = this.authenticationService.userValue;
     if (user?.role == RoleEnum.ADVISOR) {
       this.isAdvisor = true;
-    } else {
+    } else if (user?.role == RoleEnum.CLIENT) {
       if (user) {
         this.subscriptions.add(this.clientService.getClientFromUsername(user!.username).pipe(
           map((client: Client) => {
