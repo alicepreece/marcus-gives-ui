@@ -25,7 +25,7 @@ export class ClientGridComponent implements OnInit, OnDestroy {
     { headerName: 'FirstName', field: 'user.firstName', width: 120 },
     { headerName: 'Surname', field: 'user.lastName', width: 120 },
     { headerName: 'Account Number', field: 'accountNumber', width: 120 },
-    { headerName: 'No. Active Projects', field: 'projects', valueFormatter: this.formatCount, minWidth: 120},
+    { headerName: 'No. Active Projects', field: 'donations', valueFormatter: this.formatCount, minWidth: 120},
     { headerName: 'Email', field: 'emailAddress', minWidth: 175},
     { headerName: 'Amount Available', field: 'investableAmount', minWidth: 120}
   ];
