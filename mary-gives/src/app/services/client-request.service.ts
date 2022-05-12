@@ -44,14 +44,14 @@ export class ClientRequestService {
       }));
   }
 
-  createClient(client: Client): Observable<Client> {
+  createClient(client: Client): Observable<any> {
     return this.http.post<Client>(`${this.baseUrl}/addClient`, client, {
       headers: this.headers
     })
   }
 
-  updateClient(client: Client): Observable<Client> {
-    return this.http.put<Client>(`${this.baseUrl}/updateClient/${client.id}`, client, {
+  updateClient(client: Client): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/updateClient/${client.id}`, client, {
       headers: this.headers
     })
   }

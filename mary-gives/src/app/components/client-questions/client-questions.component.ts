@@ -74,11 +74,14 @@ export class ClientQuestionsComponent implements OnInit, OnDestroy {
       client.id = this.defaultClient.id;
       client.donations = this.defaultClient.donations;
       client.pastDonations = this.defaultClient.pastDonations;
-      this.subscriptions.add(this.clientRequestService.updateClient((client)).subscribe());
+      this.subscriptions.add(this.clientRequestService.updateClient((client)).subscribe(() => {
+        this.closeClient.emit();
+      }));
     } else {
-      this.subscriptions.add(this.clientRequestService.createClient(client).subscribe());
+      this.subscriptions.add(this.clientRequestService.createClient(client).subscribe(() => {
+        this.closeClient.emit();
+      }));
     }
-    this.closeClient.emit()
   }
 
   formIncomplete(): boolean {
